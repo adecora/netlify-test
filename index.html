@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boas mundo!!!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+        :root {
+            --sepia: #f4ecd8;
+            --radius: 30px;
+        }
+
+        html {
+            font-family: 'Roboto', serif;
+            font-size: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            background-color: var(--sepia);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main>h1 {
+            font-size: 4rem;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::before {
+            content: attr(data-text);
+            position: absolute;
+            
+            /* horizontal center */
+            left: 50%; /* Posiciona el elemento al 50% desde la parte media su contenedor. Estará a la mitad de la longitud del contenedor. */
+            transform: translateX(-50%); /* Mueve el elemento hacia la izquierda en un 50% de su propia longitud. Esto compensa el desplazamiento realizado por `left: 50%` centrando el elemento horizontalmente dentro de su contenedor */
+
+            /* movemos arriba */
+            bottom: 100%;
+            margin-bottom: 15px;
+
+            /* basic styles */
+            font-size: 1.5rem;
+            width: 200px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #D6D6D8;
+            color: rgb(56, 52, 52);
+            text-align: center;
+
+            opacity: 0;
+            transition: 0.2s opacity;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+
+            left: 50%;
+            transform: translateX(-50%);
+
+            bottom: 100%;
+            margin-bottom: -15px;
+
+            border: 15px solid #D6D6D8;
+            border-color: #D6D6D8 transparent transparent transparent;
+
+            opacity: 0;
+            transition: 0.2s opacity;
+        }
+
+        .tooltip:hover::before,
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+    </style>
+    <script type="module">
+        console.log('Boas mundo!!!');
+        const title = document.querySelector('main > h1.tooltip');
+        title.classList.remove('tooltip')
+        const content = title.textContent;
+        title.textContent = '';
+
+        const startupDelay = 2000;
+        const typeDelay = 250;
+
+        let i = 0;
+        let timeout;
+
+        const loop = () => {
+            if (content[i] === undefined) {
+                clearTimeout(timeout);
+                title.classList.add('tooltip')
+                return;
+            }
+
+            title.textContent = content.slice(0, ++i);
+            timeout = setTimeout(loop, typeDelay);
+        }
+        setTimeout(loop, startupDelay);
+    </script>
+</head>
+
+<body>
+    <main>
+        <h1 data-text="Benvidos xentinha!" class="tooltip">Boas mundo!!!</h1>
+    </main>
+</body>
+
+</html>
